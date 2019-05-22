@@ -12,7 +12,8 @@ def tokenize(line):
     final_words = []
     for word in words:
         # Ref: https://stackoverflow.com/questions/29916065/how-to-do-camelcase-split-in-python
-        final_words += [m.group(0) for m in re.finditer(".+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)", word)]
+        final_words += [m.group(0) for m in re.finditer(
+            ".+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)", word)]
 
     return final_words
 
@@ -34,9 +35,11 @@ def find_spell_errors_cs(words):
     script_dir = vim.eval("s:dir")
     return find_spell_errors(words, ["-d", "cs.dict", "--dict-dir={dir}/../dict".format(dir=script_dir)])
 
+
 def find_spell_errors(words, extra_args=[]):
     base_aspell_cmd = ["aspell", "--list"]
-    extra_aspell_args = ["-l", "en-US"]
+    # TODO: Make this configurable
+    extra_aspell_args = ["-l", "en-US", "-W", "4"]
 
     cmd = base_aspell_cmd + extra_aspell_args + extra_args
 
@@ -73,7 +76,7 @@ for word in find_spell_errors(find_spell_errors_cs(unique_words)):
         # If the word starts with a lower case, we don't allow any lowercase
         # charater before it, becuase the match may be a suffix
         vim.command(
-            "call matchadd(\'Error\', \'\\v[^a-z]\zs{word}\ze[^a-z]\')".format(
+                "call matchadd(\'Error\', \'\\v[^a-z]\zs{word}\ze[^a-z]\')".format(
                 word=re.escape(word)
             )
         )
