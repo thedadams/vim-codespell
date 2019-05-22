@@ -68,7 +68,7 @@ for word in find_spell_errors(find_spell_errors_cs(unique_words)):
         # word, so we need to allow characters before it.
         # TODO: extract this matchadd command as a function
         vim.command(
-            "call matchadd(\'Error\', \'\\v{word}\ze[^a-z]\')".format(
+            "call matchadd(\'SpellBad\', \'\\v{word}\ze[^a-z]\')".format(
                 word=re.escape(word)
             )
         )
@@ -76,7 +76,7 @@ for word in find_spell_errors(find_spell_errors_cs(unique_words)):
         # If the word starts with a lower case, we don't allow any lowercase
         # character before it, because the match may be a suffix
         vim.command(
-                "call matchadd(\'Error\', \'\\v[^a-z]\zs{word}\ze[^a-z]\')".format(
+                "call matchadd(\'SpellBad\', \'\\v[^a-z]\zs{word}\ze[^a-z]\')".format(
                 word=re.escape(word)
             )
         )
