@@ -18,7 +18,7 @@ def tokenize(line):
     return final_words
 
 
-def filter_multi_occurance(words):
+def filter_multi_occurrence(words):
     counts = defaultdict(lambda: 0)
     for word in words:
         counts[word] += 1
@@ -54,7 +54,7 @@ def find_spell_errors(words, extra_args=[]):
 # Main
 lines = " ".join(vim.current.buffer)
 words = tokenize(lines)
-words = filter_multi_occurance(words)
+words = filter_multi_occurrence(words)
 unique_words = list(set(words))
 for word in find_spell_errors(find_spell_errors_cs(unique_words)):
     # silently skip empty string, which is usually due to the dictionary not
@@ -74,7 +74,7 @@ for word in find_spell_errors(find_spell_errors_cs(unique_words)):
         )
     else:
         # If the word starts with a lower case, we don't allow any lowercase
-        # charater before it, becuase the match may be a suffix
+        # character before it, because the match may be a suffix
         vim.command(
                 "call matchadd(\'Error\', \'\\v[^a-z]\zs{word}\ze[^a-z]\')".format(
                 word=re.escape(word)

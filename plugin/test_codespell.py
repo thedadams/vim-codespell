@@ -80,5 +80,5 @@ def test_tokenize_alphanumeric():
     assert ["uzer"] == codespell.tokenize("uzer42")
 
 
-def test_filter_multi_occurance():
-    assert ["Hello"] == codespell.filter_multi_occurance(["Hello"] + ["World"] * 5)
+def test_filter_multi_occurrence():
+    assert ["Hello"] == codespell.filter_multi_occurrence(["Hello"] + ["World"] * 5)

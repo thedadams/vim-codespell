@@ -17,7 +17,7 @@ A vim plugin for checking the spelling for source code. The main difference from
 # Commands
 * `:Codespell`: Run the spell checker once
 
-* To run it everytime you save a `*.py` file, add the following to your vimrc:
+* To run it every time you save a `*.py` file, add the following to your vimrc:
 ```
 :autocmd BufWritePre *.py :Codespell
 ```
