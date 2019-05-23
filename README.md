@@ -22,6 +22,9 @@ A vim plugin for checking the spelling for source code. The main difference from
 :autocmd BufWritePre *.py :Codespell
 ```
 
+# Variables
+* `g:CodespellShortWord`: Don't spell check words of this length or shorter (default: 4)
+
 # Testing
 * `sudo pip3 install pytest pytest-benchmark` (Or use `virtualenv`)
 * `py.test`

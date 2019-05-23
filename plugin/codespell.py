@@ -39,8 +39,7 @@ def find_spell_errors_cs(words):
 def find_spell_errors(words, extra_args=[]):
     base_aspell_cmd = ["aspell", "--list"]
     # TODO: Make this configurable
-    extra_aspell_args = ["-l", "en-US", "-W", "4"]
-
+    extra_aspell_args = ["-l", "en-US", "-W", vim.eval('g:CodespellShortWord')]
     cmd = base_aspell_cmd + extra_aspell_args + extra_args
 
     p = Popen(cmd,
