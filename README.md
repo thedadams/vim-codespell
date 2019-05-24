@@ -8,8 +8,8 @@ A vim plugin for checking the spelling for source code. The main difference from
   * Mac: `brew install aspell`
   * Ubuntu: `sudo apt-get install aspell`
 * Add it to vim with the vim plugin manager of your choice.
-  * Vundle: Add `Plugin 'shinglyu/vim-codespell'` to your `~/.vimrc` and run `:PluginInstall`
-  * vim-plug: Add `Plug 'shinglyu/vim-codespell'` to your `~/.vimrc` and run `:PlugInstall`
+  * Vundle: Add `Plugin 'thedadams/vim-codespell'` to your `~/.vimrc` and run `:PluginInstall`
+  * vim-plug: Add `Plug 'thedadams/vim-codespell'` to your `~/.vimrc` and run `:PlugInstall`
 
 # Commands
 * `:Codespell`: Run the spell checker once
