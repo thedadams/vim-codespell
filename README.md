@@ -9,10 +9,7 @@ A vim plugin for checking the spelling for source code. The main difference from
   * Ubuntu: `sudo apt-get install aspell`
 * Add it to vim with the vim plugin manager of your choice.
   * Vundle: Add `Plugin 'shinglyu/vim-codespell'` to your `~/.vimrc` and run `:PluginInstall`
-* To use the custom dictionary, you need to build it.
-  * Go to the installed location of the plugin. (For Vundle on Mac it's `cd ~/.vim/bundle/vim-codespell`)
-  * `cd dict`
-  * `./build.sh`
+  * vim-plug: Add `Plug 'shinglyu/vim-codespell'` to your `~/.vimrc` and run `:PlugInstall`
 
 # Commands
 * `:Codespell`: Run the spell checker once
@@ -33,13 +30,13 @@ A vim plugin for checking the spelling for source code. The main difference from
 # Generating Dictionaries
 You can add custom words to the dictionary.
 
-* Create a text file in `dict/` (e.g. `dict/cs.list`) of words, one word per line
-* Generate the dictionary
+* Change into `dict/` and create a text file (e.g. `personal.list`) of words, one word per line
+* Generate the dictionary for the language you desire (English for example)
 ```
-aspell --lang=en create master ./cs.dict < cs.list
+dict/build.sh en
 ```
 
-A dictionary file `cs.dict` will be generated in the current dir. The plugin will pick it up using the default filename.
+A dictionary file like `cs-en.dict` will be generated in the current dir. The plugin will pick it up if `CodespellLang` is set to use that language. Note that you have to generate a separate dictionary for each language if you construct custom dictionaries this way.
 
 * Test the dictionary locally:
 ```
