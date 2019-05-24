@@ -23,6 +23,7 @@ A vim plugin for checking the spelling for source code. The main difference from
 ```
 
 # Variables
+* `g:CodespellLang`: Language to use, see aspell documentation, aspell dictionary automatically generated when changed (default: "en")
 * `g:CodespellShortWord`: Don't spell check words of this length or shorter (default: 4)
 
 # Testing

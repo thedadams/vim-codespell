@@ -38,6 +38,7 @@ csv
 ctypes
 datetime
 decimal
+defaultdict
 difflib
 dis
 doctest

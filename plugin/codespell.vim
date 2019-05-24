@@ -3,7 +3,7 @@ if !has('python3')
 endif
 
 " s:dir will be used in python
-let s:dir= fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let s:dir= fnaMemodify(resolve(expand('<sfile>:p')), ':h')
 let s:path = s:dir . '/codespell.py'
 
 " Config variables
@@ -26,6 +26,8 @@ function! s:initVariable(var, value)
 endfunction
 
 call s:initVariable("g:CodespellShortWord", 4)
+call s:initVariable("g:CodespellLang", "en")
+
 
 function! CodeSpell()
   call clearmatches()

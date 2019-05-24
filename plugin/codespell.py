@@ -2,7 +2,8 @@
 # Python 3
 from collections import defaultdict
 import re
-from subprocess import Popen, PIPE, STDOUT
+from pathlib import Path
+from subprocess import Popen, PIPE, STDOUT, run
 import vim
 
 
@@ -33,17 +34,23 @@ def filter_multi_occurrence(words):
 def find_spell_errors_cs(words):
     # Must be executed from the top level
     script_dir = vim.eval("s:dir")
-    return find_spell_errors(words, ["-d", "cs.dict", "--dict-dir={dir}/../dict".format(dir=script_dir)])
+    lang = vim.eval("g:CodespellLang")
+    dict_file = "cs-" + lang + ".dict"
+    if not Path(script_dir + "/../dict/" + dict_file).is_file():
+        build_new_dict(script_dir, lang)
+    return find_spell_errors(words, ["-d", dict_file, "--dict-dir={dir}/../dict".format(dir=script_dir)])
 
+def build_new_dict(script_dir, lang):
+    run([script_dir + "/../dict/build.sh", lang], cwd=script_dir + "/../dict/")
 
 def find_spell_errors(words, extra_args=[]):
     base_aspell_cmd = ["aspell", "--list"]
     # TODO: Make this configurable
-    extra_aspell_args = ["-l", "en-US", "-W", vim.eval('g:CodespellShortWord')]
+    extra_aspell_args = [
+        "-l", vim.eval('g:CodespellLang'), "-W", vim.eval('g:CodespellShortWord')]
     cmd = base_aspell_cmd + extra_aspell_args + extra_args
 
-    p = Popen(cmd,
-              stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+    p = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=STDOUT)
 
     stdout = p.communicate(input=str.encode(" ".join(words)))[0]
     output = stdout.decode()
@@ -62,20 +69,5 @@ for word in find_spell_errors(find_spell_errors_cs(unique_words)):
         continue
     # We ignore words that has more lowercase char after it, because we
     # might be matching a prefix.
-    if word[0].isupper():
-        # If the word starts with a upper case, it might be part of a CamelCase
-        # word, so we need to allow characters before it.
-        # TODO: extract this matchadd command as a function
-        vim.command(
-            "call matchadd(\'SpellBad\', \'\\v{word}\ze[^a-z]\')".format(
-                word=re.escape(word)
-            )
-        )
-    else:
-        # If the word starts with a lower case, we don't allow any lowercase
-        # character before it, because the match may be a suffix
-        vim.command(
-                "call matchadd(\'SpellBad\', \'\\v[^a-z]\zs{word}\ze[^a-z]\')".format(
-                word=re.escape(word)
-            )
-        )
+    vim.command("call matchadd('SpellBad', '{word}')".format(
+        word=re.escape(word)))
