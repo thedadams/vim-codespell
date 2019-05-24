@@ -3,7 +3,7 @@ if !has('python3')
 endif
 
 " s:dir will be used in python
-let s:dir= fnaMemodify(resolve(expand('<sfile>:p')), ':h')
+let s:dir= fnamemodify(resolve(expand('<sfile>:p')), ':h')
 let s:path = s:dir . '/codespell.py'
 
 " Config variables
@@ -34,4 +34,16 @@ function! CodeSpell()
   execute 'py3file ' . s:path
 endfunction
 
+function! AddWord()
+  let l:word = expand("<cword>")
+  let l:confirmed = confirm('Add ' . l:word . ' to the dictionary?', "&Yes\n&No", 2)
+  if l:confirmed == 1
+          call clearmatches()
+          execute 'py3file ' . s:dir . '/addword.py'
+          execute 'py3file ' . s:path
+  endif
+endfunction
+
+
 command! Codespell call CodeSpell()
+command! CodespellAddWord call AddWord()

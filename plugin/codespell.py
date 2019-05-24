@@ -40,8 +40,10 @@ def find_spell_errors_cs(words):
         build_new_dict(script_dir, lang)
     return find_spell_errors(words, ["-d", dict_file, "--dict-dir={dir}/../dict".format(dir=script_dir)])
 
+
 def build_new_dict(script_dir, lang):
     run([script_dir + "/../dict/build.sh", lang], cwd=script_dir + "/../dict/")
+
 
 def find_spell_errors(words, extra_args=[]):
     base_aspell_cmd = ["aspell", "--list"]
@@ -55,6 +57,7 @@ def find_spell_errors(words, extra_args=[]):
     stdout = p.communicate(input=str.encode(" ".join(words)))[0]
     output = stdout.decode()
     return output.rstrip().split("\n")
+
 
 
 # Main
